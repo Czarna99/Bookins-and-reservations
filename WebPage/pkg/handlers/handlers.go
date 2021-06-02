@@ -1,10 +1,13 @@
 package handlers
 
 import (
+	"Bookins-and-reservations/WebPage/models"
 	"Bookins-and-reservations/WebPage/pkg/config"
 	"Bookins-and-reservations/WebPage/pkg/render"
 	"net/http"
 )
+
+//TemplateData holds data sent from handlers to templates
 
 var Repo *Repository
 
@@ -23,11 +26,18 @@ func NewHandlers(r *Repository) {
 }
 
 // Home is the handler for the home page
-func Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.tmpl")
+func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About is the handler for the about page
-func About(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "about.page.tmpl")
+func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
+
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello again"
+
+	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+	})
+
 }
